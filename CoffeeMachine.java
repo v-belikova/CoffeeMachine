@@ -11,7 +11,7 @@ public class CoffeeMachine {
         this.coffee = 0; //this - указывает на конкретный предмет, работает с переменной, которая принадлежит классу, в нее вкладываем значение параметр
         this.milk = 0;
         this.water = 0;
-    }
+    },
     private void SetIngredient() { //запрос на заправку ингредиентов setтеры присваивают значения
         System.out.println("Заполнение");
         this.coffee = 500.0;
