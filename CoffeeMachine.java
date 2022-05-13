@@ -6,6 +6,7 @@ public class CoffeeMachine {
     static Scanner scan = new Scanner(System.in);
     private double coffee, milk, water; //privat модификатор доступа (видимость данных и методов только внутри объявленного класса)
     private int Coffee_Count = 0;
+    git
 
     public CoffeeMachine() { //конструктор с параметрами
         this.coffee = 0; //this - указывает на конкретный предмет, работает с переменной, которая принадлежит классу, в нее вкладываем значение параметр
