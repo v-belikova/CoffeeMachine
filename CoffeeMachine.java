@@ -12,13 +12,47 @@ public class CoffeeMachine {
         this.milk = 0;
         this.water = 0;
     }
-    private void SetIngredient() { //запрос на заправку ингредиентов setтеры присваивают значения
-        System.out.println("Заполнение");
-        this.coffee = 500.0;
-        this.milk = 1;
-        this.water = 2;
-        System.out.println("Заполнение завершено");
+    private void SetIngredient() {//запрос на заправку ингредиентов setтеры присваивают значения
+        System.out.println("Выберите ингредиент \n 1.Coffee \n 2.Milk \n 3.Water");
+        char t = scan.next().charAt(0);
+        switch (t) {
+            case '1':
+                this.setCoffee();
+                break;
+            case '2':
+                this.setMilk();
+                break;
+            case '3':
+                this.setWater();
+            case '0':
+                break;
+        }
     }
+        private void setCoffee() {
+            if (this.coffee > 10) {
+                System.out.println("Кофе достаточно");
+            } else {
+                System.out.println("Добавляю кофе");
+                this.coffee = 490.0;
+            }
+        }
+        private void setMilk() {
+            if (this.milk > 0.4) {
+                System.out.println("Молока достаточно");
+            } else {
+                System.out.println("Добавляю молоко");
+                this.milk = 0.6;
+            }
+        }
+        private void setWater() {
+            if (this.water > 0.4) {
+                System.out.println("Воды достаточно");
+            } else {
+                System.out.println("Добавляю воду");
+                this.water = 1.6;
+            }
+        }
+
     private void GetIngredient(){ //getтеры возвращают значение
         System.out.println("Кофе(грамм) " + String.format("%.1f",this.coffee));// %.1f указывает число в строке с одним числом после запятой
         System.out.println("Молоко(литр) "+String.format("%.1f", this.milk));
@@ -85,7 +119,7 @@ public class CoffeeMachine {
         this.GetIngredient();
         boolean t = true;
         while (t) {
-            System.out.println(" 1.Количество ингредиентов \n 2.Заполнить ингредиенты \n 3.Очистить машину \n 4.Сделать кофе \n 5.Сколько кофе вы хотите сделать? \n 6.Выход  ");
+            System.out.println(" 1.Количество ингредиентов \n 2.Заполнить ингредиенты \n 3.Очистить машину \n 4.Сделать кофе \n 5.Сколько кофе вы хотите сделать? \n 6.Выключить  ");
             char c = CoffeeMachine.scan.next().charAt(0);
             switch (c) {
                 case '1':
@@ -105,7 +139,7 @@ public class CoffeeMachine {
                     System.out.println("Делаю " + this.Coffee_Count + "кофе.");
                     break;
                 case '6':
-                    System.out.println("Выход");
+                    System.out.println("Выключить");
                     t = false;
                     break;
             }
@@ -116,7 +150,7 @@ public class CoffeeMachine {
             Scanner scan = new Scanner(System.in);
             System.out.println("Включить кофемашину Y или N?");
             char press = scan.next().charAt(0); //charAt() возвращает первое значение выбранное пользователем
-            if (press == 'Y' || press == 'y') {
+            if (press == 'Y' || press == 'y' || press == 'н' || press == 'Н') {
                 CoffeeMachine cm = new CoffeeMachine();
                 cm.start();
                 System.out.println("Кофемашина выключена");
@@ -130,8 +164,6 @@ public class CoffeeMachine {
         CoffeeRecipe espresso = new CoffeeRecipe(100, 0, 40,40);
 
         System.out.println();*/
-//new
-
     }
 }
 
