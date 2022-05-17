@@ -4,148 +4,190 @@ import java.util.Scanner;
 
 public class CoffeeMachine {
     static Scanner scan = new Scanner(System.in);
-    private double coffee, milk, water; //privat модификатор доступа (видимость данных и методов только внутри объявленного класса)
-    private int Coffee_Count = 0;
+    static double coffee = 0, milk = 0, water = 0, bin = 0; // модификатор доступа (видимость данных и методов только внутри объявленного класса)
+    static int Coffee_Count = 0; //счетчик кофе
 
-    public CoffeeMachine() { //конструктор с параметрами
-        this.coffee = 0; //this - указывает на конкретный предмет, работает с переменной, которая принадлежит классу, в нее вкладываем значение параметр
-        this.milk = 0;
-        this.water = 0;
+    public CoffeeMachine() {
     }
-    private void SetIngredient() {//запрос на заправку ингредиентов setтеры присваивают значения
-        System.out.println("Выберите ингредиент \n 1.Coffee \n 2.Milk \n 3.Water");
-        char t = scan.next().charAt(0);
-        switch (t) {
-            case '1':
-                this.setCoffee();
-                break;
-            case '2':
-                this.setMilk();
-                break;
-            case '3':
-                this.setWater();
-            case '0':
-                break;
+    private void setCoffee() {
+        if (coffee > 10) {
+            System.out.println("Кофе достаточно");
+        } else {
+            System.out.println("Добавляю кофе");
+            coffee = 490.0;
+            System.out.println("-------");
+            System.out.println("-------");
+            System.out.println("-------");
         }
     }
-        private void setCoffee() {
-            if (this.coffee > 10) {
-                System.out.println("Кофе достаточно");
-            } else {
-                System.out.println("Добавляю кофе");
-                this.coffee = 490.0;
+    private void setMilk() {
+        if (milk > 0.4) {
+            System.out.println("Молока достаточно");
+        } else {
+            System.out.println("Добавляю молоко");
+            milk = 0.6;
+            System.out.println("-------");
+            System.out.println("-------");
+            System.out.println("-------");
+        }
+    }
+    private void setWater() {
+        if (water > 0.4) {
+            System.out.println("Воды достаточно");
+        } else {
+            System.out.println("Добавляю воду");
+            water = 1.6;
+            System.out.println("-------");
+            System.out.println("-------");
+            System.out.println("-------");
+        }
+    }
+    private void GetIngredient() { //getтеры возвращают значение
+        System.out.println("Кофе(грамм) " + String.format("%.1f", coffee));// %.1f указывает число в строке с одним числом после запятой
+        System.out.println("Молоко(литр) " + String.format("%.1f", milk));
+        System.out.println("Вода(литр) " + String.format("%.1f", water));
+    }
+    private void CleanMachine() {
+        if (bin > 2) {
+            System.out.println("Очистка Кофемашины");
+            coffee = 0;
+            milk = 0;
+            water = 0;
+            bin = 0;
+        } else {
+            System.out.println("Очистка не требуется");
+            System.out.println("-------");
+            System.out.println("-------");
+            System.out.println("-------");
+        }
+    }
+    private void Espresso() {
+        System.out.println("Сколько порций кофе вам необходимо? \n 1. 3 порции \n 2.Ввести нужное количество");
+        int choice = scan.nextInt();
+        switch (choice) {
+            case '1' -> this.addEspresso();
+            case '2' -> this.addEspressoChoice();
+            default -> {
+                while (choice > 3) {
+                    System.out.println("Выберите значение 1 или 2");
+                    choice = scan.nextInt();
+                }
             }
         }
-        private void setMilk() {
-            if (this.milk > 0.4) {
-                System.out.println("Молока достаточно");
-            } else {
-                System.out.println("Добавляю молоко");
-                this.milk = 0.6;
-            }
-        }
-        private void setWater() {
-            if (this.water > 0.4) {
-                System.out.println("Воды достаточно");
-            } else {
-                System.out.println("Добавляю воду");
-                this.water = 1.6;
-            }
-        }
-
-    private void GetIngredient(){ //getтеры возвращают значение
-        System.out.println("Кофе(грамм) " + String.format("%.1f",this.coffee));// %.1f указывает число в строке с одним числом после запятой
-        System.out.println("Молоко(литр) "+String.format("%.1f", this.milk));
-        System.out.println("Вода(литр) "+String.format("%.1f", this.water));
     }
-    private void CleanMachine(){
-        System.out.println("Очистка Кофемашины");
-        this.coffee = 0;
-        this.milk = 0;
-        this.water= 0;
-        System.out.println("Очистка закончена");
-    }
-    private void makeCoffee(){
-        System.out.println("Выберите кофе: \n 1.Espresso \n 2.Cappuccino");
-        char t =  scan.next().charAt(0);
-        switch(t){
-            case '1':
-                this.Espresso();
-                break;
-            case '2':
-                this.Cappuccino();
-                break;
-            case '0':
-                break;
-        }
-    }
-    private void Espresso(){
-        if(this.coffee >= 10 && this.water >= 0.2) {
+    private void addEspresso() {
+        if (coffee >= 10 && water >= 0.2) {
             System.out.println("Делаю Espresso");
             System.out.println("Добавляю 10 грамм кофе");
-            this.coffee = this.coffee - 10;
+            coffee = coffee - 10;
             System.out.println("Добавляю 0,2 л воды");
-            this.water = this.water - 0.2;
+            water = water - 0.2;
+            bin = bin + 0.3;
             System.out.println("Кофе готово");
-            this.coffee++;
-            }
-            else{
-                System.out.println("Кофе(грамм) "+String.format("%.1f",this.coffee));
-                System.out.println("Вода(литр) "+String.format("%.1f", this.water));
-                System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе");
+            coffee++;
+        } else {
+            System.out.println("Кофе(грамм) " + String.format("%.1f", coffee));
+            System.out.println("Вода(литр) " + String.format("%.1f", water));
+            System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе");
+        }
+    }
+    private void addEspressoChoice() {
+        if (coffee >= 10 && water >= 0.2) {
+            System.out.println("Делаю Espresso");
+            System.out.println("Добавляю 10 грамм кофе");
+            coffee = coffee - 10;
+            System.out.println("Добавляю 0,2 л воды");
+            water = water - 0.2;
+            bin = bin + 0.3;
+            System.out.println("Кофе готово");
+            coffee++;
+        } else {
+            System.out.println("Кофе(грамм) " + String.format("%.1f", coffee));
+            System.out.println("Вода(литр) " + String.format("%.1f", water));
+            System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе");
+        }
+    }
+    private void Cappuccino() {
+        System.out.println("Сколько порций кофе вам необходимо? \n 1. 3 порции \n 2.Ввести нужное количество");
+        int choice = scan.nextInt();
+        switch (choice) {
+            case '1' -> this.addCappuccino();
+            case '2' -> this.addCappuccinoChoice();
+            default -> {
+                while(choice > 3) {
+                    System.out.println("Выберите значение 1 или 2");
+                    choice = scan.nextInt();
+                }
             }
         }
-        private void Cappuccino(){
-            if(this.coffee >= 10 && this.milk >= 0.4 && this.water >= 0.2){
-                System.out.println("Делаю Cappuccino");
-                System.out.println("Добавляю 10грамм кофе");
-                this.coffee = this.coffee - 10;
-                System.out.println("Добавляю 0,4 молока");
-                this.milk = this.milk - 0.4;
-                System.out.println("Добавляю 0,2 л воды");
-                this.water = this.water - 0.2;
-                System.out.println("Cappuccino готово!");
-                this.Coffee_Count++;
+    }
+    private void addCappuccino() {
+        if (coffee >= 30 && milk >= 1.2 && water >= 0.6 && bin <= 1.7) {
+            System.out.println("Делаю Cappuccino");
+            coffee = coffee - 10;
+            milk = milk - 0.4;
+            water = water - 0.2;
+            bin = bin + 0.3;
+            System.out.println("Cappuccino готово!");
+            Coffee_Count++;
+        } else {
+            System.out.println("Кофе(грамм) " + String.format("%.1f", coffee));
+            System.out.println("Молоко(литр) " + String.format("%.1f", milk));
+            System.out.println("Вода(литр) " + String.format("%.1f", water));
+            System.out.println("Требуется чистка Кофемашины!");
+            System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе");
             }
-            else{
-                System.out.println("Кофе(грамм) "+String.format("%.1f",this.coffee));
-                System.out.println("Молоко(литр) "+String.format("%.1f", this.milk));
-                System.out.println("Вода(литр) "+String.format("%.1f", this.water));
-                System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе");
-            }
+        }
+    private void addCappuccinoChoice() {
+        if (coffee >= 10 && milk >= 0.4 && water >= 0.2) {
+            System.out.println("Делаю Cappuccino");
+            System.out.println("Добавляю 10грамм кофе");
+            coffee = coffee - 10;
+            System.out.println("Добавляю 0,4 молока");
+            milk = milk - 0.4;
+            System.out.println("Добавляю 0,2 л воды");
+            water = water - 0.2;
+            bin = bin + 0.3;
+            System.out.println("Cappuccino готово!");
+            Coffee_Count++;
+        } else {
+            System.out.println("Кофе(грамм) " + String.format("%.1f", coffee));
+            System.out.println("Молоко(литр) " + String.format("%.1f", milk));
+            System.out.println("Вода(литр) " + String.format("%.1f", water));
+            System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе");
+        }
     }
     public void start() {
         System.out.println("Выберите операцию!");
-        this.GetIngredient();
         boolean t = true;
         while (t) {
-            System.out.println(" 1.Количество ингредиентов \n 2.Заполнить ингредиенты \n 3.Очистить машину \n 4.Сделать кофе \n 5.Сколько кофе вы хотите сделать? \n 6.Выключить  ");
+            this.GetIngredient();
+            System.out.println(" 1.Cappuccino \n 2.Espresso \n 3.Добавить кофе \n 4.Добавить молоко \n 5.Добавить воду \n 6.Очистить \n 7.Выключить  ");
             char c = CoffeeMachine.scan.next().charAt(0);
             switch (c) {
                 case '1':
-                    System.out.println("Количество");
-                    this.GetIngredient();
-                    System.out.println("---");
+                    this.Cappuccino();
                 case '2':
-                    this.SetIngredient();
-                    break;
+                    this.Espresso();
                 case '3':
-                    this.CleanMachine();
-                    break;
+                    this.setCoffee();
                 case '4':
-                    this.makeCoffee();
+                    this.setMilk();
                     break;
                 case '5':
-                    System.out.println("Делаю " + this.Coffee_Count + "кофе.");
+                    this.setWater();
                     break;
                 case '6':
+                    this.CleanMachine();
+                    break;
+                case '7':
                     System.out.println("Выключить");
                     t = false;
                     break;
             }
         }
     }
-    public static class MakeCoffee {
+    static class MakeCoffee {
         public static void main(String[] args) {
             Scanner scan = new Scanner(System.in);
             System.out.println("Включить кофемашину Y или N?");
@@ -157,13 +199,6 @@ public class CoffeeMachine {
             } else
                 System.out.println("Кофемашина выключена");
         }
-
-
-       /* CoffeeRecipe cappuccino = new CoffeeRecipe(300 , 50, 20, 40);
-
-        CoffeeRecipe espresso = new CoffeeRecipe(100, 0, 40,40);
-
-        System.out.println();*/
     }
 }
 
