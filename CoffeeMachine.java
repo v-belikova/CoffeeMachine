@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class CoffeeMachine {
     static Scanner scan = new Scanner(System.in);
     static int coffee = 100, milk = 100, water = 1000, bin = 0; // модификатор доступа (видимость данных и методов только внутри объявленного класса)
-    final int COFFEE_MAX = 501, MILK_MAX = 200, WATER_MAX = 2000, BIN_MAX = 100;
+    final int COFFEE_MAX = 501, MILK_MAX = 200, WATER_MAX = 2000;
     static int Coffee_Count = 0; //счетчик кофе
 
     public CoffeeMachine() {
@@ -43,21 +43,20 @@ public class CoffeeMachine {
             System.out.println("Добавляю воду \n \n \n");
         }
     }
-    private void GetIngredient() { //getтеры возвращают значение
-        System.out.println("Кофе(мг) " + String.format("%d", coffee));// %.1f указывает число в строке с одним числом после запятой
-        System.out.println("Молоко(мл) " + String.format("%d", milk));
-        System.out.println("Вода(мл) " + String.format("%d", water));
-    }
-    private void CleanMachine() {
-        if (bin > 50) {
+    private void setCleanMachine() {
+        System.out.println("Корзина(%)  " + String.format("%d", bin));
+        if (bin > 70) {
             System.out.println("Очистка Кофемашины\n \n \n");
-            coffee = 0;
-            milk = 0;
-            water = 0;
             bin = 0;
         } else {
             System.out.println("Очистка не требуется \n \n \n");
         }
+    }
+    private void GetIngredient() { //getтеры возвращают значение
+        System.out.println("Кофе(мг) " + String.format("%d", coffee));// %.1f указывает число в строке с одним числом после запятой
+        System.out.println("Молоко(мл) " + String.format("%d", milk));
+        System.out.println("Вода(мл) " + String.format("%d", water));
+        System.out.println("Корзина(%)  " + String.format("%d", bin));
     }
     private void Espresso() {
         System.out.println("Сколько порций кофе вам необходимо? \n 1. 3 порции \n 2.Ввести нужное количество \n 3.Рецепт Espresso");
@@ -191,7 +190,7 @@ public class CoffeeMachine {
                     this.setWater();
                     break;
                 case '6':
-                    this.CleanMachine();
+                    this.setCleanMachine();
                     break;
                 case '7':
                     System.out.println("Выключить");
