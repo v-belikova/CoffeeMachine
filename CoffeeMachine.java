@@ -333,7 +333,7 @@ public class CoffeeMachine {
                     cm.startIO();
                     System.out.println("Кофемашина выключена");
                 } else
-                    System.out.println("Кофемашина выключена");
+                    System.out.println("Кофемашина выключена!");
                 throw new IllegalStateException("ошибка");
             } catch (IllegalStateException a) {
                 a.printStackTrace();
