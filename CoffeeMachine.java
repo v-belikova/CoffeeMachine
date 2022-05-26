@@ -1,70 +1,91 @@
 package CoffeeMachine;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class CoffeeMachine {
-    private static final Logger logger = Logger.getLogger(CoffeeMachine.class.getName());
     static Scanner scan = new Scanner(System.in);
     static int coffee = 100, milk = 100, water = 1000, bin = 0;
     final int COFFEE_MAX = 501, MILK_MAX = 200, WATER_MAX = 2000;
     static int Coffee_Count = 0;
     static int Coffee_Count1 = 0;
-    public CoffeeMachine() {
+
+
+    private static final Logger logger = Logger.getLogger(CoffeeMachine.class.getName());
+
+    enum Rice {
+      CAPPUCCINO,
+        ESPRESSO
     }
+
+
+    public CoffeeMachine(){
+    }
+
     private void setCoffee() {
         System.out.println("Кофе(мг) " + String.format("%d", coffee));
         System.out.println("Введите сколько кофе добавить(мг)");
         int volumeCoffee = scan.nextInt();
         if (coffee + volumeCoffee > COFFEE_MAX) {
-            System.out.println("Можно добавить max:  " +  (COFFEE_MAX - coffee) + " мг \n \n \n");
+            System.out.println("Можно добавить max:  " + (COFFEE_MAX - coffee) + " мг \n \n \n");
         } else {
             coffee = coffee + volumeCoffee;
+            logger.info("Добавлено" + volumeCoffee + "мг кофе");
             System.out.println("Добавляю кофе \n \n \n");
         }
     }
+
     private void setMilk() {
         System.out.println("Молоко(мл) " + String.format("%d", milk));
         System.out.println("Введите сколько молока добавить(мл)");
         int volumeMilk = scan.nextInt();
         if (milk + volumeMilk > MILK_MAX) {
-            System.out.println("Можно добавить max:  " +  (MILK_MAX - milk) + " мл \n \n \n");
+            System.out.println("Можно добавить max:  " + (MILK_MAX - milk) + " мл \n \n \n");
         } else {
             milk = milk + volumeMilk;
+            logger.info("Добавлено" + volumeMilk + " мл молока");
             System.out.println("Добавляю молоко \n \n \n");
         }
     }
+
     private void setWater() {
         System.out.println("Вода(мл) " + String.format("%d", water));
         System.out.println("Введите сколько воды добавить(мл)");
         int volumeWater = scan.nextInt();
         if (water + volumeWater > WATER_MAX) {
-            System.out.println("Можно добавить max:  " +  (WATER_MAX - water) + " мл \n \n \n");
+            System.out.println("Можно добавить max:  " + (WATER_MAX - water) + " мл \n \n \n");
         } else {
             water = water + volumeWater;
+            logger.info("Добавлено" + volumeWater + " мл воды");
             System.out.println("Добавляю воду \n \n \n");
         }
     }
+
     private void setCleanMachine() {
         System.out.println("Корзина(%)  " + String.format("%d", bin));
         if (bin > 70) {
             System.out.println("Очистка Кофемашины\n \n \n");
             bin = 0;
+            logger.info("Очистка машины");
         } else {
             System.out.println("Очистка не требуется \n \n \n");
         }
     }
+
     private void GetIngredient() {
         System.out.println("Кофе(мг) " + String.format("%d", coffee));
         System.out.println("Молоко(мл) " + String.format("%d", milk));
         System.out.println("Вода(мл) " + String.format("%d", water));
         System.out.println("Корзина(%)  " + String.format("%d", bin));
     }
+
     private void Espresso() {
         System.out.println("Сколько порций кофе вам необходимо? \n 1. 3 порции \n 2.Ввести нужное количество \n 3.Рецепт Espresso");
-        int choice = scan.nextInt();;
+        int choice = scan.nextInt();
+        ;
         boolean end = false;
-        for(int i = 1; i <= 3; i++){
+        for (int i = 1; i <= 3; i++) {
             if (end)
                 break;
             switch (choice) {
@@ -78,13 +99,15 @@ public class CoffeeMachine {
                     break;
                 case 3:
                     System.out.println("Рецепт Espresso:\n 1.Коффе 10гр;\n 3.Вода 30мл;\n \n \n");
+                    logger.info("Выведен рецепт");
                     end = true;
                     break;
                 default:
                     System.out.println("Выберите значение  \n \n \n");
             }
-            }
+        }
     }
+
     private void addEspresso() {
         if (coffee >= 30 && water >= 90 && bin <= 15) {
             System.out.println("Делаю Espresso");
@@ -94,6 +117,7 @@ public class CoffeeMachine {
             water = water - 90;
             bin = bin + 15;
             System.out.println("Кофе готово\n \n \n");
+            logger.info("Приготовлено 3 порции Espresso");
             Coffee_Count1 = Coffee_Count1 + 3;
         } else {
             System.out.println("Кофе(грамм) " + String.format("%d", coffee));
@@ -102,9 +126,10 @@ public class CoffeeMachine {
             System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе\n \n \n");
         }
     }
+
     private void addEspressoChoice() {
         int choiceVoliume = scan.nextInt();
-        if (coffee >= 10 * choiceVoliume && water >= 30 * choiceVoliume && bin <= 5 * choiceVoliume) {
+        if (coffee >= 10 * choiceVoliume && water >= 30 * choiceVoliume && bin <= (5 * choiceVoliume)) {
             System.out.println("Делаю Espresso");
             System.out.println("Добавляю 10 грамм кофе");
             coffee = coffee - (10 * choiceVoliume);
@@ -112,6 +137,7 @@ public class CoffeeMachine {
             water = water - (30 * choiceVoliume);
             bin = bin + (5 * choiceVoliume);
             System.out.println("Кофе готово\n \n \n");
+            logger.info("Приготовлено" + choiceVoliume + "порции Espresso");
             Coffee_Count1 = Coffee_Count1 + choiceVoliume;
         } else {
             System.out.println("Кофе(грамм) " + String.format("%d", coffee));
@@ -120,10 +146,12 @@ public class CoffeeMachine {
             System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе\n \n \n");
         }
     }
-    public void allCoffee(){
-        System.out.println("Всего приготовлено Espresso: " +  Coffee_Count1 + " шт\n \n \n");
-        System.out.println("Всего приготовлено Cappuccino: " +  Coffee_Count + " шт\n \n \n");
+
+    public void allCoffee() {
+        System.out.println("Всего приготовлено Espresso: " + Coffee_Count1 + " шт\n \n \n");
+        System.out.println("Всего приготовлено Cappuccino: " + Coffee_Count + " шт\n \n \n");
     }
+
     private void Cappuccino() {
         System.out.println("Сколько порций кофе вам необходимо? \n 1. 3 порции \n 2.Ввести нужное количество \n 3.Рецепт Cappuccino\n ");
         int choice = scan.nextInt();
@@ -142,6 +170,7 @@ public class CoffeeMachine {
                     break;
                 case 3:
                     System.out.println("Рецепт Cappuccino\n 1.Коффе 10гр;\n 2.Молоко 5мл; \n 3.Вода 50мл;\n \n \n");
+                    logger.info("Выведен рецепт");
                     end = true;
                     break;
                 default:
@@ -161,43 +190,97 @@ public class CoffeeMachine {
             bin = bin + 15;
             System.out.println("Cappuccino готово! \n \n \n");
             Coffee_Count = Coffee_Count + 3;
+            logger.info("Приготовлено 3 порции Cappuccino");
         } else {
             System.out.println("Кофе(грамм) " + String.format("%d", coffee));
             System.out.println("Молоко(литр) " + String.format("%d", milk));
             System.out.println("Вода(литр) " + String.format("%d", water));
-            System.out.println("Требуется чистка Кофемашины! "+ String.format("%d", bin) + " %");
+            System.out.println("Требуется чистка Кофемашины! " + String.format("%d", bin) + " %");
             System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе\n \n \n");
-            }
         }
+    }
+
     private void addCappuccinoChoice() {
         int choiceVoliume = scan.nextInt();
-        if (coffee >= 10 * choiceVoliume && milk >= 5 * choiceVoliume && water >= 50 * choiceVoliume && bin <= 5 * choiceVoliume) {
+        if (coffee >= 10 * choiceVoliume && milk >= 5 * choiceVoliume && water >= 50 * choiceVoliume && bin <= (5 * choiceVoliume)){
             System.out.println("Делаю Cappuccino");
             System.out.println("Добавляю кофе");
-            coffee = coffee - (10 * choiceVoliume) ;
+            coffee = coffee - (10 * choiceVoliume);
             System.out.println("Добавляю молоко");
             milk = milk - (5 * choiceVoliume);
             System.out.println("Добавляю воду");
             water = water - (50 * choiceVoliume);
             bin = bin + (5 * choiceVoliume);
             System.out.println("Cappuccino готово! \n \n \n");
+            logger.info("Приготовлено" + choiceVoliume + "порции Cappuccino");
             Coffee_Count = Coffee_Count + choiceVoliume;
         } else {
             System.out.println("Кофе(грамм) " + String.format("%d", coffee));
             System.out.println("Молоко(литр) " + String.format("%d", milk));
             System.out.println("Вода(литр) " + String.format("%d", water));
-            System.out.println("Требуется чистка Кофемашины! "+ String.format("%d", bin) + " %");
+            System.out.println("Требуется чистка Кофемашины! " + String.format("%d", bin) + " %");
             System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе\n \n \n");
         }
     }
-    public void addProfile() {
-        System.out.println("Введите ваше имя");
-        String nameProfile = scan.nextLine();
-        System.out.println("Введите название кофе");
-        String nameCoffee = scan.nextLine();
-        System.out.println("Введите количество");
-        int numberCoffee = scan.nextInt();
 
+    public void addProfile() {
+        /*Scanner scanner = new Scanner(System.in);
+        Hashmap<String, Hashmap<String, Integer>> profile =  new Hashmap<>();
+        System.out.println ("Введите имя ");
+        String choice = scanner.nextLine();
+        System.out.println ("Введите какой напиток вы предпочитаете: ? ");
+        System.out.println ("Введите сколько порций вам добавить в профиль? ");
+        int volt = scanner.nextInt();
+        profile.put(choice, volt);
+        System.out.println("Профиль добавлен:" + profile);*/
+
+        System.out.println("Выберите пнукт меню: \n 1.Cappuccino \n 2.Espresso ");
+        int choice = scan.nextInt();
+        boolean end = false;
+        for (int i = 1; i <= 4; i++) {
+            if (end)
+                break;
+            switch (choice) {
+                case 1:
+                    this.addCappuccinoPerson();
+                    end = true;
+                    break;
+                case 2:
+                    this.addEspressoPerson();
+                    end = true;
+                    break;
+                case 3:
+                    this.addChoiceProfile();
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Выберите пунк меню\n \n \n");
+            }
+        }
+    }
+    public void addCappuccinoPerson(){
+        Scanner scanner = new Scanner(System.in);
+        HashMap<String, Integer> profile = new HashMap<>();
+        System.out.println ("Введите имя ");
+        String choice = scanner.nextLine();
+        System.out.println ("Введите сколько порций вам добавить в профиль? ");
+        int volt = scanner.nextInt();
+        profile.put(choice, volt);
+        System.out.println("Профиль добавлен:" + profile);
+        }
+    public  void addEspressoPerson() {
+        Scanner scanner = new Scanner(System.in);
+        HashMap<String, Integer> profile1 = new HashMap<>();
+        System.out.println ("Введите имя ");
+        String choice = scanner.nextLine();
+        System.out.println ("Введите сколько порций вам добавить в профиль? ");
+        int volt = scanner.nextInt();
+        profile1.put(choice, volt);
+        System.out.println("Профиль добавлен:" + profile1);
+    }
+    public void addChoiceProfile(){
+        System.out.println ("Введите имя своего профиля: ");
+        System.out.println();
     }
     public void startIO() {
         System.out.println("Выберите операцию!");
@@ -239,13 +322,14 @@ public class CoffeeMachine {
         }
     }
     static class MakeCoffee {
-        public static void main(String[] args) {
+        public static void main(String[] args){
             Scanner scan = new Scanner(System.in);
             System.out.println("Включить кофемашину Y или N?");
             try {
                 char press = scan.next().charAt(0);
                 if (press == 'Y' || press == 'y' || press == 'н' || press == 'Н') {
                     CoffeeMachine cm = new CoffeeMachine();
+                    logger.info("Кофемашина запущена");
                     cm.startIO();
                     System.out.println("Кофемашина выключена");
                 } else
@@ -254,7 +338,7 @@ public class CoffeeMachine {
             } catch (IllegalStateException a) {
                 a.printStackTrace();
                     System.out.println("Для включения нажмите Y");
-                }
             }
         }
     }
+}
