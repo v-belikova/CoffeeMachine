@@ -14,11 +14,30 @@ public class CoffeeMachine {
 
     private static final Logger logger = Logger.getLogger(CoffeeMachine.class.getName());
 
-    enum Rice {
-      CAPPUCCINO,
-        ESPRESSO
+    enum Cappuccino_Rice{
+        WATER(50),
+        COFFEE(10),
+        MILK(5);
+        private final int value;
+        Cappuccino_Rice(int value) {
+            this.value = value;
+        }
+        public int getValue() {
+            return value;
+        }
     }
+    enum Espresso_Rice{
+        WATER(30),
+        COFFEE(10);
 
+        private final int value_1;
+        Espresso_Rice(int value_1) {
+            this.value_1 = value_1;
+        }
+        public int getValue() {
+            return value_1;
+        }
+    }
 
     public CoffeeMachine(){
     }
@@ -98,7 +117,7 @@ public class CoffeeMachine {
                     end = true;
                     break;
                 case 3:
-                    System.out.println("Рецепт Espresso:\n 1.Коффе 10гр;\n 3.Вода 30мл;\n \n \n");
+                    System.out.println("Рецепт Espresso:" + Espresso_Rice.WATER + Espresso_Rice.WATER.getValue() + "\n" + Espresso_Rice.COFFEE + Espresso_Rice.COFFEE.getValue() + "\n \n \n");
                     logger.info("Выведен рецепт");
                     end = true;
                     break;
@@ -169,9 +188,9 @@ public class CoffeeMachine {
                     end = true;
                     break;
                 case 3:
-                    System.out.println("Рецепт Cappuccino\n 1.Коффе 10гр;\n 2.Молоко 5мл; \n 3.Вода 50мл;\n \n \n");
-                    logger.info("Выведен рецепт");
+                    System.out.println("Рецепт Cappuccino \n" + Cappuccino_Rice.WATER + Cappuccino_Rice.WATER.getValue() + "\n" + Cappuccino_Rice.COFFEE + Cappuccino_Rice.COFFEE.getValue() + "\n" + Cappuccino_Rice.MILK + Cappuccino_Rice.MILK.getValue()  + "\n \n \n");
                     end = true;
+                    logger.info("Выведен рецепт");
                     break;
                 default:
                     System.out.println("Выберите значение\n \n \n");
@@ -334,7 +353,7 @@ public class CoffeeMachine {
                     System.out.println("Кофемашина выключена");
                 } else
                     System.out.println("Кофемашина выключена!");
-                throw new IllegalStateException("ошибка");
+                throw new IllegalStateException("Неверно введена команда!");
             } catch (IllegalStateException a) {
                 a.printStackTrace();
                     System.out.println("Для включения нажмите Y");
