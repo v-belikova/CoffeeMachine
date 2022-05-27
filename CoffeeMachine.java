@@ -1,4 +1,4 @@
-package coffeemachine;
+package CoffeeMachine;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -19,6 +19,7 @@ public class CoffeeMachine {
         COFFEE(10),
         MILK(5);
         private final int value;
+
         Cappuccino_Rice(int value) {
             this.value = value;
         }
@@ -353,7 +354,7 @@ public class CoffeeMachine {
                     System.out.println("Кофемашина выключена");
                 } else
                     System.out.println("Кофемашина выключена!");
-                throw new IllegalStateException("Неверно введена команда!");
+                throw new IllegalStateException("ошибка");
             } catch (IllegalStateException a) {
                 a.printStackTrace();
                     System.out.println("Для включения нажмите Y");
