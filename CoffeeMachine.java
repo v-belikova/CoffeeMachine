@@ -1,4 +1,4 @@
-package CoffeeMachine;
+package coffeemachine;
 
 import java.util.HashMap;
 import java.util.Scanner;
