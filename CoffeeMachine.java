@@ -1,5 +1,6 @@
 package CoffeeMachine;
 
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -11,6 +12,7 @@ public class CoffeeMachine {
     static int Coffee_Count = 0;
     static int Coffee_Count1 = 0;
 
+    HashMap<String, HashMap<String, Integer>> profile =  new HashMap<>();
 
     private static final Logger logger = Logger.getLogger(CoffeeMachine.class.getName());
 
@@ -260,7 +262,18 @@ public class CoffeeMachine {
         }
     }
     public void addProfile() {
+        Scanner scanner = new Scanner(System.in);
+        HashMap<String, Integer> coffeeNumber = new HashMap<>();
+        System.out.println ("Введите какой напиток вы предпочитаете: ? ");
+        String drinkLove = scanner.nextLine();
+        System.out.println ("Введите сколько порций вам добавить в профиль? ");
+        int volt = scanner.nextInt();
+        coffeeNumber.put(drinkLove, volt);
+        System.out.println ("Введите имя ");
+        String name = scanner.next();
+        profile.put(name, coffeeNumber);
 
+        System.out.println("Профиль добавлен:"+ name + "\n" + profile + "\n");
     }
 
     public void startIO() {
