@@ -1,6 +1,6 @@
 package CoffeeMachine;
 
-import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -46,6 +46,7 @@ public class CoffeeMachine {
     private void setCoffee() {
         System.out.println("Кофе(мг) " + String.format("%d", coffee));
         System.out.println("Введите сколько кофе добавить(мг)");
+        while(!scan.hasNextInt()) scan.next();
         int volumeCoffee = scan.nextInt();
         if (coffee + volumeCoffee > COFFEE_MAX) {
             System.out.println("Можно добавить max:  " + (COFFEE_MAX - coffee) + " мг \n \n \n");
@@ -59,17 +60,22 @@ public class CoffeeMachine {
     private void setMilk() {
         System.out.println("Молоко(мл) " + String.format("%d", milk));
         System.out.println("Введите сколько молока добавить(мл)");
-        int volumeMilk = scan.nextInt();
-        if (milk + volumeMilk > MILK_MAX) {
-            System.out.println("Можно добавить max:  " + (MILK_MAX - milk) + " мл \n \n \n");
-        } else {
-            milk = milk + volumeMilk;
-            logger.info("Добавлено" + volumeMilk + " мл молока");
-            System.out.println("Добавляю молоко \n \n \n");
+        try {
+            int volumeMilk = scan.nextInt();
+            if (milk + volumeMilk > MILK_MAX) {
+                System.out.println("Можно добавить max:  " + (MILK_MAX - milk) + " мл \n \n \n");
+            } else {
+                milk = milk + volumeMilk;
+                logger.info("Добавлено" + volumeMilk + " мл молока");
+                System.out.println("Добавляю молоко \n \n \n");
+            }
+        }catch (NumberFormatException | InputMismatchException e){
+                System.out.println("Введите корректное значение!");
         }
     }
 
     private void setWater() {
+       try{
         System.out.println("Вода(мл) " + String.format("%d", water));
         System.out.println("Введите сколько воды добавить(мл)");
         int volumeWater = scan.nextInt();
@@ -80,7 +86,11 @@ public class CoffeeMachine {
             logger.info("Добавлено" + volumeWater + " мл воды");
             System.out.println("Добавляю воду \n \n \n");
         }
+        }catch (NumberFormatException | InputMismatchException e){
+           System.out.println("Введите корректное значение!");
+        }
     }
+
 
     private void setCleanMachine() {
         System.out.println("Корзина(%)  " + String.format("%d", bin));
@@ -102,8 +112,8 @@ public class CoffeeMachine {
 
     private void Espresso() {
         System.out.println("Сколько порций кофе вам необходимо? \n 1. 3 порции \n 2.Ввести нужное количество \n 3.Рецепт Espresso");
+        while(!scan.hasNextInt()) scan.next();
         int choice = scan.nextInt();
-        ;
         boolean end = false;
         for (int i = 1; i <= 3; i++) {
             if (end)
@@ -129,7 +139,7 @@ public class CoffeeMachine {
     }
 
     private void addEspresso() {
-        if (coffee >= 30 && water >= 90 && bin <= 15) {
+        if (coffee >= 30 && water >= 90 && bin <= (100 - 15) ) {
             System.out.println("Делаю Espresso");
             System.out.println("Добавляю кофе");
             coffee = coffee - 30;
@@ -148,8 +158,9 @@ public class CoffeeMachine {
     }
 
     private void addEspressoChoice() {
+        while(!scan.hasNextInt()) scan.next();
         int choiceVoliume = scan.nextInt();
-        if (coffee >= 10 * choiceVoliume && water >= 30 * choiceVoliume && bin <= (5 * choiceVoliume)) {
+        if (coffee >= 10 * choiceVoliume && water >= 30 * choiceVoliume && bin <= (100 - (5 * choiceVoliume))) {
             System.out.println("Делаю Espresso");
             System.out.println("Добавляю 10 грамм кофе");
             coffee = coffee - (10 * choiceVoliume);
@@ -174,6 +185,7 @@ public class CoffeeMachine {
 
     private void Cappuccino() {
         System.out.println("Сколько порций кофе вам необходимо? \n 1. 3 порции \n 2.Ввести нужное количество \n 3.Рецепт Cappuccino\n ");
+        while(!scan.hasNextInt()) scan.next();
         int choice = scan.nextInt();
         boolean end = false;
         for (int i = 1; i <= 4; i++) {
@@ -199,7 +211,7 @@ public class CoffeeMachine {
         }
     }
     private void addCappuccino() {
-        if (coffee >= 30 && milk >= 15 && water >= 150 && bin <= 15) {
+        if (coffee >= 30 && milk >= 15 && water >= 150 && bin <= (100 - 15)) {
             System.out.println("Делаю Cappuccino");
             System.out.println("Добавляю 30грамм кофе");
             coffee = coffee - 30;
@@ -222,7 +234,7 @@ public class CoffeeMachine {
 
     private void addCappuccinoChoice() {
         int choiceVoliume = scan.nextInt();
-        if (coffee >= 10 * choiceVoliume && milk >= 5 * choiceVoliume && water >= 50 * choiceVoliume && bin <= (5 * choiceVoliume)){
+        if (coffee >= 10 * choiceVoliume && milk >= 5 * choiceVoliume && water >= 50 * choiceVoliume && bin <= (100 - (5 * choiceVoliume))){
             System.out.println("Делаю Cappuccino");
             System.out.println("Добавляю кофе");
             coffee = coffee - (10 * choiceVoliume);
@@ -244,17 +256,22 @@ public class CoffeeMachine {
     }
 
     public void addProfile() {
+
         /*Scanner scanner = new Scanner(System.in);
-        Hashmap<String, Hashmap<String, Integer>> profile =  new Hashmap<>();
-        System.out.println ("Введите имя ");
-        String choice = scanner.nextLine();
+        HashMap<String, Integer> coffeeNumber = new HashMap<>();
         System.out.println ("Введите какой напиток вы предпочитаете: ? ");
+        String drinkLove = scanner.nextLine();
         System.out.println ("Введите сколько порций вам добавить в профиль? ");
         int volt = scanner.nextInt();
-        profile.put(choice, volt);
-        System.out.println("Профиль добавлен:" + profile);*/
+        coffeeNumber.put(drinkLove, volt);
+        HashMap<String, HashMap<String, Integer>> profile =  new HashMap<>();
+        System.out.println ("Введите имя ");
+        String nameProfile = scanner.nextLine();
+        profile.put(nameProfile, coffeeNumber);
 
-        System.out.println("Выберите пнукт меню: \n 1.Cappuccino \n 2.Espresso ");
+        System.out.println("Профиль добавлен:"+ nameProfile + "\n" + profile + "\n");*/
+
+        /*System.out.println("Выберите пнукт меню: \n 1.Cappuccino \n 2.Espresso ");
         int choice = scan.nextInt();
         boolean end = false;
         for (int i = 1; i <= 4; i++) {
@@ -300,7 +317,7 @@ public class CoffeeMachine {
     }
     public void addChoiceProfile(){
         System.out.println ("Введите имя своего профиля: ");
-        System.out.println();
+        System.out.println();*/
     }
     public void startIO() {
         System.out.println("Выберите операцию!");
@@ -308,44 +325,44 @@ public class CoffeeMachine {
         while (t) {
             this.GetIngredient();
             System.out.println(" 1.Cappuccino \n 2.Espresso \n 3.Добавить кофе \n 4.Добавить молоко \n 5.Добавить воду \n 6.Очистить \n 7.Количество приготовленного кофе \n 8.Добавить профиль  \n 9.Выключить  ");
-            char c = CoffeeMachine.scan.next().charAt(0);
-            switch (c) {
-                case '1':
-                    this.Cappuccino();
-                    break;
-                case '2':
-                    this.Espresso();
-                    break;
-                case '3':
-                    this.setCoffee();
-                    break;
-                case '4':
-                    this.setMilk();
-                    break;
-                case '5':
-                    this.setWater();
-                    break;
-                case '6':
-                    this.setCleanMachine();
-                    break;
-                case '7':
-                    this.allCoffee();
-                    break;
-                case '8':
-                    this.addProfile();
-                    break;
-                case '9':
+                char c = CoffeeMachine.scan.next().charAt(0);
+                switch (c) {
+                    case '1':
+                        this.Cappuccino();
+                        break;
+                    case '2':
+                        this.Espresso();
+                        break;
+                    case '3':
+                        this.setCoffee();
+                        break;
+                    case '4':
+                        this.setMilk();
+                        break;
+                    case '5':
+                        this.setWater();
+                        break;
+                    case '6':
+                        this.setCleanMachine();
+                        break;
+                    case '7':
+                        this.allCoffee();
+                        break;
+                    case '8':
+                        this.addProfile();
+                        break;
+                    case '9':
                     System.out.println("Выключить");
                     t = false;
                     break;
+                }
             }
         }
-    }
     static class MakeCoffee {
         public static void main(String[] args){
             Scanner scan = new Scanner(System.in);
             System.out.println("Включить кофемашину Y или N?");
-            try {
+
                 char press = scan.next().charAt(0);
                 if (press == 'Y' || press == 'y' || press == 'н' || press == 'Н') {
                     CoffeeMachine cm = new CoffeeMachine();
@@ -354,11 +371,7 @@ public class CoffeeMachine {
                     System.out.println("Кофемашина выключена");
                 } else
                     System.out.println("Кофемашина выключена!");
-                throw new IllegalStateException("ошибка");
-            } catch (IllegalStateException a) {
-                a.printStackTrace();
-                    System.out.println("Для включения нажмите Y");
-            }
+
         }
     }
 }
