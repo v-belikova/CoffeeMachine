@@ -278,8 +278,11 @@ public class CoffeeMachine {
     public void addProfile() {
         Scanner scanner = new Scanner(System.in);
         HashMap<Integer, Integer> coffeeNumber = new HashMap<>();
-        System.out.println("Выберите какой напиток вы предпочитаете:  \n 1.Cappuccino \n 2. Espresso");
+        System.out.println("Выберите какой напиток вы предпочитаете:  \n 1.Cappuccino \n 2. Espresso \n 3.Выбрать профиль");
         drinkLove = scanner.nextInt();
+        if(drinkLove == 3){
+            choiceProfile();
+        }
         System.out.println("Введите сколько порций вам добавить в профиль? ");
         volt = scanner.nextInt();
         coffeeNumber.put(drinkLove, volt);
@@ -315,10 +318,8 @@ public class CoffeeMachine {
             if (Objects.equals(nameUsers, getName())) {
                 if (drinkLove == 1) {
                     makeCoffeeCappuccino();
-                    logger.info("Приготовлено Cappuccino");
                 } else if (drinkLove == 2) {
                     makeCoffeeEspresso();
-                    logger.info("Приготовлено Espresso");
                 }
             }
         }
