@@ -12,6 +12,7 @@ public class CoffeeMachine {
 
     HashMap<String, HashMap<Integer, Integer>> profile =  new HashMap<>();
     static String nameUsers;
+    static int losk;
 
     public String getName() {
         return name;
@@ -278,7 +279,14 @@ public class CoffeeMachine {
     public void addProfile() {
         Scanner scanner = new Scanner(System.in);
         HashMap<Integer, Integer> coffeeNumber = new HashMap<>();
-        System.out.println("Выберите какой напиток вы предпочитаете:  \n 1.Cappuccino \n 2. Espresso \n 3.Выбрать профиль");
+        System.out.println("Выбрать профиль:\n 1.да \n 2.Добавить профиль ");
+        losk = scanner.nextInt();
+        while(losk == 1){
+            choiceProfile();
+            startIO();
+            break;
+        }
+        System.out.println("Выберите какой напиток вы предпочитаете:  \n 1.Cappuccino \n 2. Espresso");
         drinkLove = scanner.nextInt();
         System.out.println("Введите сколько порций вам добавить в профиль? ");
         volt = scanner.nextInt();
@@ -312,7 +320,7 @@ public class CoffeeMachine {
         public void choiceProfile () {
             System.out.println("Для быстрого набора введите имя");
             nameUsers = (scan.next());
-            if (Objects.equals(nameUsers, getName())) {
+            if (Objects.equals(nameUsers, name)) {
                 if (drinkLove == 1) {
                     makeCoffeeCappuccino();
                 } else if (drinkLove == 2) {
