@@ -69,6 +69,10 @@ public class CoffeeMachine {
         System.out.println("Введите сколько кофе добавить(мг)");
         while (!scan.hasNextInt()) scan.next();
         int volumeCoffee = scan.nextInt();
+        while (volumeCoffee < 0){
+            System.out.println("Введите корректное значение!");
+            volumeCoffee = scan.nextInt();
+        }
         if (coffee + volumeCoffee > COFFEE_MAX) {
             System.out.println("Можно добавить max:  " + (COFFEE_MAX - coffee) + " мг \n \n \n");
         } else {
@@ -83,6 +87,10 @@ public class CoffeeMachine {
         System.out.println("Введите сколько молока добавить(мл)");
         try {
             int volumeMilk = scan.nextInt();
+            while (volumeMilk < 0){
+                System.out.println("Введите корректное значение!");
+                volumeMilk = scan.nextInt();
+            }
             if (milk + volumeMilk > MILK_MAX) {
                 System.out.println("Можно добавить max:  " + (MILK_MAX - milk) + " мл \n \n \n");
             } else {
@@ -100,6 +108,10 @@ public class CoffeeMachine {
             System.out.println("Вода(мл) " + String.format("%d", water));
             System.out.println("Введите сколько воды добавить(мл)");
             int volumeWater = scan.nextInt();
+            while (volumeWater < 0){
+                System.out.println("Введите корректное значение!");
+                volumeWater = scan.nextInt();
+            }
             if (water + volumeWater > WATER_MAX) {
                 System.out.println("Можно добавить max:  " + (WATER_MAX - water) + " мл \n \n \n");
             } else {
