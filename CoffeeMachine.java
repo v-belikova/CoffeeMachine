@@ -1,8 +1,6 @@
 package CoffeeMachine;
 
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class CoffeeMachine {
@@ -12,9 +10,25 @@ public class CoffeeMachine {
     static int Coffee_Count = 0;
     static int Coffee_Count1 = 0;
 
-    HashMap<String, HashMap<String, Integer>> profile =  new HashMap<>();
+    HashMap<String, HashMap<Integer, Integer>> profile =  new HashMap<>();
+    static String nameUsers;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    String name;
+
+    static int drinkLove;
+
+    static int volt;
 
     private static final Logger logger = Logger.getLogger(CoffeeMachine.class.getName());
+
 
     enum Cappuccino_Recipe {
         WATER(50),
@@ -263,17 +277,91 @@ public class CoffeeMachine {
     }
     public void addProfile() {
         Scanner scanner = new Scanner(System.in);
-        HashMap<String, Integer> coffeeNumber = new HashMap<>();
-        System.out.println ("Введите какой напиток вы предпочитаете: ? ");
-        String drinkLove = scanner.nextLine();
-        System.out.println ("Введите сколько порций вам добавить в профиль? ");
-        int volt = scanner.nextInt();
+        HashMap<Integer, Integer> coffeeNumber = new HashMap<>();
+        System.out.println("Выберите какой напиток вы предпочитаете:  \n 1.Cappuccino \n 2. Espresso");
+        drinkLove = scanner.nextInt();
+        System.out.println("Введите сколько порций вам добавить в профиль? ");
+        volt = scanner.nextInt();
         coffeeNumber.put(drinkLove, volt);
-        System.out.println ("Введите имя ");
-        String name = scanner.next();
+        System.out.println("Введите имя ");
+        name = (scanner.next());
         profile.put(name, coffeeNumber);
+        System.out.println("Профиль добавлен:" + name + "\n" + profile + "\n");
 
-        System.out.println("Профиль добавлен:"+ name + "\n" + profile + "\n");
+        System.out.println("Выберите пункт меню: \n 1.Выйти в меню \n 2. Выбрать профиль");
+        while (!scan.hasNextInt()) scan.next();
+        int choice = scan.nextInt();
+        boolean end = false;
+        for (int i = 1; i <= 4; i++) {
+            if (end)
+                break;
+            switch (choice) {
+                case 1:
+                    this.startIO();
+                    end = true;
+                    break;
+                case 2:
+                    this.choiceProfile();
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Выберите значение\n \n \n");
+            }
+        }
+    }
+        public void choiceProfile () {
+            System.out.println("Для быстрого набора введите имя");
+            nameUsers = (scan.next());
+            if (Objects.equals(nameUsers, getName())) {
+                if (drinkLove == 1) {
+                    makeCoffeeCappuccino();
+                    logger.info("Приготовлено Cappuccino");
+                } else if (drinkLove == 2) {
+                    makeCoffeeEspresso();
+                    logger.info("Приготовлено Espresso");
+                }
+            }
+        }
+    public void makeCoffeeCappuccino(){
+        if (coffee >= 10 * volt && milk >= 5 * volt && water >= 50 * volt && bin <= (100 - (5 * volt))) {
+            System.out.println("Делаю Cappuccino");
+            System.out.println("Добавляю кофе");
+            coffee = coffee - (10 * volt);
+            System.out.println("Добавляю молоко");
+            milk = milk - (5 * volt);
+            System.out.println("Добавляю воду");
+            water = water - (50 * volt);
+            bin = bin + (5 * volt);
+            System.out.println("Cappuccino готово! \n \n \n");
+            logger.info("Приготовлено" + volt + "порции Cappuccino");
+            Coffee_Count = Coffee_Count + volt;
+            logger.info("Приготовлено Cappuccino");
+        } else {
+            System.out.println("Кофе(грамм) " + String.format("%d", coffee));
+            System.out.println("Молоко(литр) " + String.format("%d", milk));
+            System.out.println("Вода(литр) " + String.format("%d", water));
+            System.out.println("Требуется чистка Кофемашины! " + String.format("%d", bin) + " %");
+            System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе\n \n \n");
+        }
+    }
+    public void makeCoffeeEspresso(){
+        if (coffee >= 10 * volt && water >= 50 * volt && bin <= (100 - (5 * volt))) {
+            System.out.println("Делаю Cappuccino");
+            System.out.println("Добавляю кофе");
+            coffee = coffee - (10 * volt);
+            System.out.println("Добавляю воду");
+            water = water - (50 * volt);
+            bin = bin + (5 * volt);
+            System.out.println("Espresso готово! \n \n \n");
+            logger.info("Приготовлено" + volt + "порции Espresso");
+            Coffee_Count = Coffee_Count + volt;
+            logger.info("Приготовлено Espresso");
+        } else {
+            System.out.println("Кофе(грамм) " + String.format("%d", coffee));
+            System.out.println("Вода(литр) " + String.format("%d", water));
+            System.out.println("Требуется чистка Кофемашины! " + String.format("%d", bin) + " %");
+            System.out.println("Некоторые ингридиенты недоступны, необходимо заполнить перед приготовлением кофе\n \n \n");
+        }
     }
 
     public void startIO() {
